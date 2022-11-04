@@ -8,4 +8,9 @@
     <Folder Include="SqlDbDataAccess\Repositories\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.4.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+  </ItemGroup>
+
 </Project>
