@@ -1,4 +1,5 @@
-﻿using EntrenatePues.Core.Domain;
+﻿using EntrenatePues.Core.Common.Responses;
+using EntrenatePues.Core.Domain;
 using EntrenatePues.Core.Interfaces.Helpers;
 using EntrenatePues.Core.Interfaces.Repositories.Users;
 using Microsoft.Extensions.Configuration;
@@ -42,6 +43,65 @@ namespace EntrenatePues.Infraestructure.SqlDbDataAccess.Repositories.Users
             {
                 Console.WriteLine(e.Message);
                 return false;
+            }
+        }
+
+        public User FindUserById(int id)
+        {
+            try
+            {
+                string sqlParameter = "SP_GET_BY_ID_USER";
+                IEnumerable<UserResponse> result = _storeProcedureHelper.ExecuteSp<UserResponse, object>(sqlParameter, new { Id_User = id }, SettingDatabaseConnection);
+                User searchUser = null;
+                foreach (UserResponse item in result)
+                {
+                    searchUser = new User
+                    {
+                        Id = item.IdUsuario,
+                        FullName = item.NombreCompleto,
+                        Email = item.Correo,
+                        CellphoneNumber = item.Celular,
+                        Role = item.Rol
+                    };
+                }
+
+                return searchUser;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public IEnumerable<User> GetAll()
+        {
+            try
+            {
+                string sqlParameter = "SP_GET_ALL_USERS";
+                List<User> users = new();
+                IEnumerable<UserResponse> result = _storeProcedureHelper.ExecuteSp<UserResponse>(sqlParameter, SettingDatabaseConnection);
+
+                foreach (UserResponse item in result)
+                {
+                    User user = new()
+                    {
+                        Id = item.IdUsuario,
+                        FullName = item.NombreCompleto,
+                        Email = item.Correo,
+                        CellphoneNumber = item.Celular,
+                        Role = item.Rol
+                    };
+
+                    users.Add(user);
+                }
+
+                return users;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
             }
         }
     }

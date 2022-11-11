@@ -32,7 +32,7 @@ namespace EntrenatePues.Core.Services.Users
 
             return _userRepository.Create(_mapper.Map<User>(userDto)) ?
                new ResponseCode(HttpStatusCode.Created, "User created successfully") :
-               new ResponseCode(HttpStatusCode.BadRequest, "Error creating user: The user could not be inserted because it already exists or the id of the account, role and area are not correct");
+               new ResponseCode(HttpStatusCode.BadRequest, "Error creating user: The user could not be inserted because it already exists email or incorrect data");
         }
 
         public ResponseCode Delete(int id)
@@ -42,12 +42,12 @@ namespace EntrenatePues.Core.Services.Users
 
         public UserDto FindUserByUserId(int userId)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<UserDto>(_userRepository.FindUserById(userId));
         }
-
+        
         public IEnumerable<UserDto> GetAll()
         {
-            throw new NotImplementedException();
+           return _mapper.Map<IEnumerable<UserDto>>(_userRepository.GetAll());
         }
 
         public ResponseCode RecoverPassword(RecoverPasswordRequestDto recoverPasswordRequest)
