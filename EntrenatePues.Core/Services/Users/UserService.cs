@@ -23,7 +23,14 @@ namespace EntrenatePues.Core.Services.Users
 
         public ResponseCode ChangePassword(ChangePasswordRequestDto changePasswordRequest)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(changePasswordRequest.NewPassword))
+            {
+                return new ResponseCode(HttpStatusCode.BadRequest, "You must enter a password");
+            }
+
+            return _userRepository.UpdatePassword(changePasswordRequest.IdUser, changePasswordRequest.NewPassword) ?
+                    new ResponseCode(HttpStatusCode.OK, "Password Updated") :
+                    new ResponseCode(HttpStatusCode.BadRequest, "Error Updating Password");
         }
 
         public ResponseCode Create(UserDto userDto)
@@ -31,13 +38,20 @@ namespace EntrenatePues.Core.Services.Users
             userDto.Role = 2;
 
             return _userRepository.Create(_mapper.Map<User>(userDto)) ?
-               new ResponseCode(HttpStatusCode.Created, "User created successfully") :
+               new ResponseCode(HttpStatusCode.OK, "User created successfully") :
                new ResponseCode(HttpStatusCode.BadRequest, "Error creating user: The user could not be inserted because it already exists email or incorrect data");
         }
 
         public ResponseCode Delete(int id)
         {
-            throw new NotImplementedException();
+            if (id == 0)
+            {
+                return new ResponseCode(HttpStatusCode.BadRequest, "Invalid Id");
+            }
+
+            return _userRepository.Delete(id) ?
+                       new ResponseCode(HttpStatusCode.OK, "User removed successfully") :
+                       new ResponseCode(HttpStatusCode.BadRequest, "The user you want to delete does not exist");
         }
 
         public UserDto FindUserByUserId(int userId)
@@ -57,7 +71,14 @@ namespace EntrenatePues.Core.Services.Users
 
         public ResponseCode Update(UserDto userDto)
         {
-            throw new NotImplementedException();
+            if (userDto.Id == 0)
+            {
+                return new ResponseCode(HttpStatusCode.BadRequest, "Invalid user id");
+            }
+
+            return _userRepository.Update(_mapper.Map<User>(userDto)) ?
+               new ResponseCode(HttpStatusCode.OK, "User Updated") :
+               new ResponseCode(HttpStatusCode.NotFound, "Error: user not found or does not exist");
         }
     }
 }

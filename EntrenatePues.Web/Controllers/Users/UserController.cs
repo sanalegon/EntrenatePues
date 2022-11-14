@@ -25,16 +25,17 @@ namespace EntrenatePues.Web.Controllers.Users
 
         [Route("create")]
         [HttpPost]
-        public ResponseCode Create([FromBody] UserRequest userRequest)
+        public IActionResult Create([FromBody] UserRequest userRequest)
         {
 
             if (userRequest == null)
             {
-                return new ResponseCode(HttpStatusCode.BadRequest, "User model invalid");
+                return BadRequest(new ResponseCode(HttpStatusCode.BadRequest, "User model invalid"));
             }
 
             UserDto userDto = _mapper.Map<UserDto>(userRequest);
-            return _userService.Create(userDto);
+            ResponseCode response = _userService.Create(userDto);
+            return response.Status == HttpStatusCode.OK ? Ok(response) : BadRequest(response);
         }
 
         [Route("get-all")]
@@ -58,6 +59,29 @@ namespace EntrenatePues.Web.Controllers.Users
             UserDto userDto = _userService.FindUserByUserId(id);
             UserResponseDto userResponseDto = _mapper.Map<UserResponseDto>(userDto);
             return userResponseDto == null ? NotFound(new ResponseCode(HttpStatusCode.NotFound, "User not Found")) : Ok(userResponseDto);
+        }
+
+        [Route("update")]
+        [HttpPut]
+        public IActionResult Update([FromBody] UpdateUserRequest userUpdate)
+        {
+            ResponseCode response = _userService.Update(_mapper.Map<UserDto>(userUpdate));
+            return response.Status == HttpStatusCode.OK ? Ok(response) : NotFound(response);
+        }
+
+        [Route("delete/{id}")]
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            ResponseCode response = _userService.Delete(id);
+            return response.Status == HttpStatusCode.OK ? Ok(response) : BadRequest(response);
+        }
+
+        [HttpPut("change-password")]
+        public IActionResult ChangePassword([FromBody] ChangePasswordRequest changePasswordRequest)
+        {
+            ResponseCode response = _userService.ChangePassword(_mapper.Map<ChangePasswordRequestDto>(changePasswordRequest));
+            return response.Status == HttpStatusCode.OK ? Ok(response) : BadRequest(response);
         }
     }
 }

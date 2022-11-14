@@ -8,5 +8,8 @@ namespace EntrenatePues.Core.Interfaces.Repositories.Users
         bool Create(User user);
         IEnumerable<User> GetAll();
         User FindUserById(int id);
+        bool Update(User user);
+        bool Delete(int id);
+        bool UpdatePassword(int UserId, string password);
     }
 }

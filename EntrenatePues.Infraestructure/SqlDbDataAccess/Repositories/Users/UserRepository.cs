@@ -46,6 +46,21 @@ namespace EntrenatePues.Infraestructure.SqlDbDataAccess.Repositories.Users
             }
         }
 
+        public bool Delete(int id)
+        {
+            try
+            {
+                string sqlParameter = "SP_DELETE_USER";
+                IEnumerable<bool> result = _storeProcedureHelper.ExecuteSp<bool, object>(sqlParameter, new { ID_USUARIO = id }, SettingDatabaseConnection);
+                return result.FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
         public User FindUserById(int id)
         {
             try
@@ -102,6 +117,46 @@ namespace EntrenatePues.Infraestructure.SqlDbDataAccess.Repositories.Users
             {
                 Console.WriteLine(e.Message);
                 return null;
+            }
+        }
+
+        public bool Update(User user)
+        {
+            try
+            {
+                string sqlParameter = "SP_UPDATE_USER";
+                IEnumerable<bool> result = _storeProcedureHelper.ExecuteSp<bool, object>(sqlParameter,
+                    new
+                    {
+                        ID_USUARIO = user.Id,
+                        NOMBRE_COMPLETO = user.FullName,
+                        CORREO = user.Email,
+                        CELULAR = user.CellphoneNumber
+                    },
+                    SettingDatabaseConnection);
+
+                return result.FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        public bool UpdatePassword(int UserId, string password)
+        {
+            try
+            {
+                string sqlParameter = "SP_UPDATE_PASSWORD";
+                IEnumerable<bool> result = _storeProcedureHelper.ExecuteSp<bool, object>(sqlParameter, new { ID_USUARIO = UserId, NUEVA_CONTRASENA = password }, SettingDatabaseConnection);
+
+                return result.FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
             }
         }
     }

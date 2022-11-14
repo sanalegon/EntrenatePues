@@ -14,6 +14,8 @@ namespace EntrenatePues.Web.Mappings.Users
             CreateMap<UserDto, User>();
             CreateMap<User, UserDto>();
             CreateMap<UserDto, UserResponseDto>();
+            CreateMap<UpdateUserRequest, UserDto>();
+            CreateMap<ChangePasswordRequest, ChangePasswordRequestDto>();
         }
     }
 }
