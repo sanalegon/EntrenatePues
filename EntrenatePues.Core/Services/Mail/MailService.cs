@@ -16,7 +16,7 @@ namespace EntrenatePues.Core.Services.Mail
         {
             _configuration = configuration;
         }
-        public ResponseCode SendMail(string to, string subject, string body)
+        public ResponseCode SendMail(string to, string subject, string body, string nameUser)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace EntrenatePues.Core.Services.Mail
 
                 MimeMessage message = new();
                 message.From.Add(new MailboxAddress("Entrenate Pues", from));
-                message.To.Add(new MailboxAddress("", to));
+                message.To.Add(new MailboxAddress(nameUser, to));
                 message.Subject = subject;
                 BodyBuilder bodyBuilder = new()
                 {

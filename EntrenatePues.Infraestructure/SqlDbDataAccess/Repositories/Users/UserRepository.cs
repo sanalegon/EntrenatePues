@@ -61,6 +61,33 @@ namespace EntrenatePues.Infraestructure.SqlDbDataAccess.Repositories.Users
             }
         }
 
+        public User FindUserByeEmail(string email)
+        {
+            try
+            {
+                string sqlParameter = "SP_GET_BY_EMAIL_USER";
+                IEnumerable<UserResponse> result = _storeProcedureHelper.ExecuteSp<UserResponse, object>(sqlParameter, new { EMAIL = email }, SettingDatabaseConnection);
+                User searchUser = null;
+                foreach (UserResponse item in result)
+                {
+                    searchUser = new User
+                    {
+                        Id = item.IdUsuario,
+                        FullName = item.NombreCompleto,
+                        Email = item.Correo,
+                        CellphoneNumber = item.Celular,
+                        Role = item.Rol
+                    };
+                }
+                return searchUser;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
         public User FindUserById(int id)
         {
             try

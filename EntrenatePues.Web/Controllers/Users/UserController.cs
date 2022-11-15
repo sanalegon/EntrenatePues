@@ -77,10 +77,27 @@ namespace EntrenatePues.Web.Controllers.Users
             return response.Status == HttpStatusCode.OK ? Ok(response) : BadRequest(response);
         }
 
-        [HttpPut("change-password")]
+        [Route("change-password")]
+        [HttpPut]
         public IActionResult ChangePassword([FromBody] ChangePasswordRequest changePasswordRequest)
         {
             ResponseCode response = _userService.ChangePassword(_mapper.Map<ChangePasswordRequestDto>(changePasswordRequest));
+            return response.Status == HttpStatusCode.OK ? Ok(response) : BadRequest(response);
+        }
+
+        [Route("recover-password")]
+        [HttpPut]
+        public IActionResult RecoverPassword([FromBody] RecoverPasswordRequest recoverPassword)
+        {
+            ResponseCode response = _userService.RecoverPassword(_mapper.Map<RecoverPasswordRequestDto>(recoverPassword));
+            return response.Status == HttpStatusCode.OK ? Ok(response) : BadRequest(response);
+        }
+
+        [Route("update-password-byCode")]
+        [HttpPut]
+        public IActionResult UpdatePasswordByCode([FromBody] ChangePasswordRecoveryRequest changePassword)
+        {
+            ResponseCode response = _userService.CangePasswordRecovery(_mapper.Map<ChangePasswordRecoveryRequestDto>(changePassword));
             return response.Status == HttpStatusCode.OK ? Ok(response) : BadRequest(response);
         }
     }
