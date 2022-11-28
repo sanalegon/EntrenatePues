@@ -49,6 +49,7 @@ namespace EntrenatePues.Web.Controllers.Users
             return userResponseDtos == null ? NotFound(new ResponseCode(HttpStatusCode.NotFound, "Users not found")) : Ok(userResponseDtos);
         }
 
+        [Authorize]
         [Route("get-by-id/{id}")]
         [HttpGet]
         public IActionResult GetByUserId(int id)
@@ -63,6 +64,7 @@ namespace EntrenatePues.Web.Controllers.Users
             return userResponseDto == null ? NotFound(new ResponseCode(HttpStatusCode.NotFound, "User not Found")) : Ok(userResponseDto);
         }
 
+        [Authorize]
         [Route("update")]
         [HttpPut]
         public IActionResult Update([FromBody] UpdateUserRequest userUpdate)
@@ -71,6 +73,7 @@ namespace EntrenatePues.Web.Controllers.Users
             return response.Status == HttpStatusCode.OK ? Ok(response) : NotFound(response);
         }
 
+        [Authorize]
         [Route("delete/{id}")]
         [HttpDelete]
         public IActionResult Delete(int id)
@@ -79,6 +82,7 @@ namespace EntrenatePues.Web.Controllers.Users
             return response.Status == HttpStatusCode.OK ? Ok(response) : BadRequest(response);
         }
 
+        [Authorize]
         [Route("change-password")]
         [HttpPut]
         public IActionResult ChangePassword([FromBody] ChangePasswordRequest changePasswordRequest)
