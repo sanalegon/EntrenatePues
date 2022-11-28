@@ -2,6 +2,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using EntrenatePues.Core;
 using EntrenatePues.Infraestructure;
+using EntrenatePues.Web.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -48,7 +49,7 @@ namespace EntrenatePues.Web
             _ = app.UseRouting();
 
             _ = app.UseAuthorization();
-
+            _ = app.UseMiddleware<TokenMiddleware>();
             _ = app.UseEndpoints(endpoints =>
             {
                 _ = endpoints.MapControllers();

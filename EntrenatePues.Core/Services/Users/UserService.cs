@@ -162,5 +162,15 @@ namespace EntrenatePues.Core.Services.Users
                new ResponseCode(HttpStatusCode.OK, "User Updated") :
                new ResponseCode(HttpStatusCode.NotFound, "Error: user not found or does not exist");
         }
+
+        public bool ValidatePassword(string password)
+        {
+            if (string.IsNullOrEmpty(password))
+            {
+                return false;
+            }
+
+            return _userRepository.ValidatePassword(password);
+        }
     }
 }

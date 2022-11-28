@@ -2,6 +2,7 @@
 using EntrenatePues.Core.Common.Responses;
 using EntrenatePues.Core.Dtos;
 using EntrenatePues.Core.Interfaces.Services.Users;
+using EntrenatePues.Web.Middlewares;
 using EntrenatePues.Web.Models.Users;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -38,6 +39,7 @@ namespace EntrenatePues.Web.Controllers.Users
             return response.Status == HttpStatusCode.OK ? Ok(response) : BadRequest(response);
         }
 
+        [Authorize]
         [Route("get-all")]
         [HttpGet]
         public IActionResult GetAll()

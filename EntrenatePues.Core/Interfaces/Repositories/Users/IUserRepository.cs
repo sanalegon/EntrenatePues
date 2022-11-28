@@ -12,5 +12,6 @@ namespace EntrenatePues.Core.Interfaces.Repositories.Users
         bool Update(User user);
         bool Delete(int id);
         bool UpdatePassword(int UserId, string password);
+        bool ValidatePassword(string password);
     }
 }

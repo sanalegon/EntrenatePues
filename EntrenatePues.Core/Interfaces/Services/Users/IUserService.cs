@@ -15,5 +15,6 @@ namespace EntrenatePues.Core.Interfaces.Services.Users
         ResponseCode ChangePassword(ChangePasswordRequestDto changePasswordRequest);
         ResponseCode RecoverPassword(RecoverPasswordRequestDto recoverPasswordRequest);
         ResponseCode CangePasswordRecovery(ChangePasswordRecoveryRequestDto changePassword);
+        bool ValidatePassword(string password);
     }
 }

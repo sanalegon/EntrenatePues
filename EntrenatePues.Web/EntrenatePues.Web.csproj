@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Middlewares\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\EntrenatePues.Core\EntrenatePues.Core.csproj" />
     <ProjectReference Include="..\EntrenatePues.Infraestructure\EntrenatePues.Infraestructure.csproj" />
   </ItemGroup>

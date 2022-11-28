@@ -186,5 +186,21 @@ namespace EntrenatePues.Infraestructure.SqlDbDataAccess.Repositories.Users
                 return false;
             }
         }
+
+        public bool ValidatePassword(string password)
+        {
+            try
+            {
+                string sqlParameter = "SP_VALIDATE_PASSWORD";
+                IEnumerable<bool> result = _storeProcedureHelper.ExecuteSp<bool, object>(sqlParameter, new { CONTRASENA = password}, SettingDatabaseConnection);
+
+                return result.FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
     }
 }
