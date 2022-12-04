@@ -13,12 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Middlewares\" />
-    <Folder Include="Mappings\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\EntrenatePues.Core\EntrenatePues.Core.csproj" />
     <ProjectReference Include="..\EntrenatePues.Infraestructure\EntrenatePues.Infraestructure.csproj" />
   </ItemGroup>
