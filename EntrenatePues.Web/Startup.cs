@@ -25,6 +25,7 @@ namespace EntrenatePues.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            _ = services.AddCors();
             _ = services.AddAutofac();
             _ = services.AddControllers();
             _ = services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -45,14 +46,23 @@ namespace EntrenatePues.Web
             }
 
             _ = app.UseHttpsRedirection();
-
             _ = app.UseRouting();
+            _ = app.UseCors();
 
+            _ = app.UseAuthentication();
             _ = app.UseAuthorization();
             _ = app.UseMiddleware<TokenMiddleware>();
             _ = app.UseEndpoints(endpoints =>
             {
                 _ = endpoints.MapControllers();
+            });
+
+            _ = app.UseCors(builder =>
+            {
+                _ = builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
             });
         }
 

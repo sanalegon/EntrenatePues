@@ -4,6 +4,7 @@ using EntrenatePues.Core.Dtos;
 using EntrenatePues.Core.Interfaces.Services.Users;
 using EntrenatePues.Web.Middlewares;
 using EntrenatePues.Web.Models.Users;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Net;
@@ -11,6 +12,7 @@ using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace EntrenatePues.Web.Controllers.Users
 {
+    [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
